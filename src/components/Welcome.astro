@@ -216,62 +216,86 @@ const recentActivity: RecentActivityItem[] = [
 			<p class="desc">{description}</p>
 		</header>
 
-		<div class="grid">
-			<section class="section" aria-label="Summary">
-				<h2>Summary</h2>
-				<ul class="bullets">
-					{summaryBullets.map((item) => (
-						<li>{item}</li>
+		<div class="layoutGrid">
+			<div class="gutterLeft" aria-label="Overview">
+				<section class="section" aria-label="Summary">
+					<h2>Summary</h2>
+					<ul class="bullets">
+						{summaryBullets.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</section>
+
+				<section class="section" aria-label="Experience">
+					<h2>Experience</h2>
+					{experience.map((role) => (
+						<article class="role">
+							<header class="roleHeader">
+								<h3 class="roleTitle">{role.title}</h3>
+								<p class="roleMeta">
+									<span class="roleCompany">{role.company}</span>
+									{role.client ? <span> • <span class="roleClient">{role.client}</span></span> : null}
+									{role.location ? <span> • {role.location}</span> : null}
+									<span> • {role.start}–{role.end}</span>
+								</p>
+							</header>
+
+							<ul class="bullets">
+								{role.highlights.map((item) => (
+									<li>{item}</li>
+								))}
+							</ul>
+
+							{role.achievements?.length ? (
+								<div class="examples">
+									<h4>Successes &amp; achievements</h4>
+									<ul class="examplesList">
+										{role.achievements.map((item) => (
+											<li>{item}</li>
+										))}
+									</ul>
+								</div>
+							) : null}
+
+							{role.examples?.length ? (
+								<div class="examples">
+									<h4>Example work</h4>
+									<ul class="examplesList">
+										{role.examples.map((ex) => (
+											<li>
+												<span class="exampleTitle">{ex.title}:</span> {ex.detail}
+											</li>
+										))}
+									</ul>
+								</div>
+							) : null}
+						</article>
 					))}
-				</ul>
-			</section>
+				</section>
+			</div>
 
-			<section class="section" aria-label="Experience">
-				<h2>Experience</h2>
-				{experience.map((role) => (
-					<article class="role">
-						<header class="roleHeader">
-							<h3 class="roleTitle">{role.title}</h3>
-							<p class="roleMeta">
-								<span class="roleCompany">{role.company}</span>
-								{role.client ? <span> • <span class="roleClient">{role.client}</span></span> : null}
-								{role.location ? <span> • {role.location}</span> : null}
-								<span> • {role.start}–{role.end}</span>
-							</p>
-						</header>
+			<div class="centerColumn" aria-label="Resume">
+				<section class="section resume" aria-label="Resume">
+					<h2>Resume</h2>
+					{resumeImageUrl ? (
+						<img class="resumeImage" src={resumeImageUrl} alt={`Resume preview for ${name}`} loading="lazy" />
+					) : (
+						<div class="resumePlaceholder" aria-label="Resume placeholder">
+							<p class="placeholderTitle">Resume placeholder</p>
+							<p class="hint">We’ll add a PDF/image later.</p>
+						</div>
+					)}
 
-						<ul class="bullets">
-							{role.highlights.map((item) => (
-								<li>{item}</li>
-							))}
-						</ul>
-
-						{role.achievements?.length ? (
-							<div class="examples">
-								<h4>Successes &amp; achievements</h4>
-								<ul class="examplesList">
-									{role.achievements.map((item) => (
-										<li>{item}</li>
-									))}
-								</ul>
-							</div>
-						) : null}
-
-						{role.examples?.length ? (
-							<div class="examples">
-								<h4>Example work</h4>
-								<ul class="examplesList">
-									{role.examples.map((ex) => (
-										<li>
-											<span class="exampleTitle">{ex.title}:</span> {ex.detail}
-										</li>
-									))}
-								</ul>
-							</div>
-						) : null}
-					</article>
-				))}
-			</section>
+					<p class="actions">
+						{resumeUrl ? (
+							<a class="button" href={resumeUrl} target="_blank" rel="noreferrer">Open resume</a>
+						) : (
+							<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
+						)}
+					</p>
+				</section>
+			</div>
 
 			<aside class="sidebar" aria-label="Details">
 				<section class="section" aria-label="Technology Experience">
@@ -309,26 +333,6 @@ const recentActivity: RecentActivityItem[] = [
 							</article>
 						))}
 					</div>
-				</section>
-
-				<section class="section resume" aria-label="Resume">
-					<h2>Resume</h2>
-					{resumeImageUrl ? (
-						<img class="resumeImage" src={resumeImageUrl} alt={`Resume preview for ${name}`} loading="lazy" />
-					) : (
-						<div class="resumePlaceholder" aria-label="Resume placeholder">
-							<p class="placeholderTitle">Resume placeholder</p>
-							<p class="hint">We’ll add a PDF/image later.</p>
-						</div>
-					)}
-
-					<p class="actions">
-						{resumeUrl ? (
-							<a class="button" href={resumeUrl} target="_blank" rel="noreferrer">Open resume</a>
-						) : (
-							<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
-						)}
-					</p>
 				</section>
 
 				<section class="section" aria-label="Skills">
@@ -396,7 +400,7 @@ const recentActivity: RecentActivityItem[] = [
 	}
 
 	.card {
-		width: min(1100px, 100%);
+		width: min(1280px, 100%);
 		background: white;
 		border: 1px solid rgba(0, 0, 0, 0.08);
 		border-radius: 14px;
@@ -433,11 +437,21 @@ const recentActivity: RecentActivityItem[] = [
 		text-transform: uppercase;
 	}
 
-	.grid {
+	.layoutGrid {
 		display: grid;
-		grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1fr);
 		gap: 20px;
 		align-items: start;
+	}
+
+	.gutterLeft {
+		display: grid;
+		gap: 16px;
+	}
+
+	.centerColumn {
+		display: grid;
+		gap: 16px;
 	}
 
 	.section {
@@ -445,7 +459,12 @@ const recentActivity: RecentActivityItem[] = [
 		padding-top: 16px;
 	}
 
-	.grid > .section:first-child {
+	.gutterLeft > .section:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+
+	.centerColumn > .section:first-child {
 		border-top: none;
 		padding-top: 0;
 	}
@@ -731,7 +750,7 @@ const recentActivity: RecentActivityItem[] = [
 	}
 
 	@media (max-width: 1024px) {
-		.grid {
+		.layoutGrid {
 			grid-template-columns: 1fr;
 		}
 
