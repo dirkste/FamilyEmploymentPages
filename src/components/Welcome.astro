@@ -33,16 +33,19 @@ const {
 			{resumeImageUrl ? (
 				<img class="resumeImage" src={resumeImageUrl} alt={`Resume preview for ${name}`} loading="lazy" />
 			) : (
-				<p class="hint">
-					Add a resume file under <code>public/</code> and set <code>resumeUrl</code> (e.g. <code>/resume.pdf</code>).
-				</p>
+				<div class="resumePlaceholder" aria-label="Resume placeholder">
+					<p class="placeholderTitle">Resume placeholder</p>
+					<p class="hint">We’ll add a PDF/image later.</p>
+				</div>
 			)}
 
-			{resumeUrl ? (
-				<p class="actions">
+			<p class="actions">
+				{resumeUrl ? (
 					<a class="button" href={resumeUrl} target="_blank" rel="noreferrer">Open resume</a>
-				</p>
-			) : null}
+				) : (
+					<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
+				)}
+			</p>
 		</section>
 	</section>
 </main>
@@ -119,6 +122,28 @@ const {
 
 	.button:hover {
 		background: #0b1220;
+	}
+
+	.buttonDisabled {
+		background: #9ca3af;
+		cursor: not-allowed;
+	}
+
+	.buttonDisabled:hover {
+		background: #9ca3af;
+	}
+
+	.resumePlaceholder {
+		border: 1px dashed rgba(0, 0, 0, 0.22);
+		border-radius: 12px;
+		padding: 16px;
+		background: rgba(17, 24, 39, 0.02);
+	}
+
+	.placeholderTitle {
+		margin: 0 0 6px;
+		color: #111827;
+		font-weight: 600;
 	}
 
 	.resumeImage {
