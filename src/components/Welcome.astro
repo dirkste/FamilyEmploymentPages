@@ -19,6 +19,73 @@ const {
 	resumeUrl,
 	resumeImageUrl,
 } = Astro.props as Props;
+
+type ExperienceItem = {
+	title: string;
+	company: string;
+	location?: string;
+	start: string;
+	end: string;
+	highlights: string[];
+	examples?: { title: string; detail: string }[];
+};
+
+const experience: ExperienceItem[] = [
+	{
+		title: 'Software Developer',
+		company: 'Company Name',
+		location: 'City, ST',
+		start: '2022',
+		end: 'Present',
+		highlights: [
+			'Built and maintained business applications with C#/.NET and SQL.',
+			'Improved performance and reliability via profiling, logging, and targeted refactors.',
+			'Partnered with stakeholders to translate requirements into working features.',
+		],
+		examples: [
+			{
+				title: 'Automation / batch processing',
+				detail: 'Reduced a manual process to a repeatable job with clear inputs/outputs and auditability.',
+			},
+			{
+				title: 'API integration',
+				detail: 'Integrated a third-party service with robust error handling and retries.',
+			},
+		],
+	},
+	{
+		title: 'Developer / Analyst',
+		company: 'Company Name',
+		start: '2019',
+		end: '2022',
+		highlights: [
+			'Delivered reporting and data workflows using Python and SQL.',
+			'Created documentation and handoffs to keep systems maintainable.',
+		],
+	},
+];
+
+const skills: Array<{ category: string; items: string[] }> = [
+	{ category: 'C# / .NET', items: ['ASP.NET', 'APIs', 'LINQ', 'Testing (placeholder)'] },
+	{ category: 'Python', items: ['Automation', 'Data processing', 'Scripting'] },
+	{ category: 'Data', items: ['SQL', 'ETL concepts', 'Reporting'] },
+	{ category: 'Tools', items: ['Git', 'CI/CD (placeholder)', 'Docker (placeholder)'] },
+];
+
+const projects: Array<{ name: string; summary: string; tech: string[]; link?: string }> = [
+	{
+		name: 'Project Name',
+		summary: 'Short description of what it does and why it matters.',
+		tech: ['C#', '.NET', 'SQL'],
+		link: undefined,
+	},
+	{
+		name: 'Project Name',
+		summary: 'Short description of problem solved, approach, and outcome.',
+		tech: ['Python', 'Automation'],
+		link: undefined,
+	},
+];
 ---
 
 <main class="page">
@@ -28,25 +95,99 @@ const {
 			<p class="desc">{description}</p>
 		</header>
 
-		<section class="resume" aria-label="Resume">
-			<h2>Resume</h2>
-			{resumeImageUrl ? (
-				<img class="resumeImage" src={resumeImageUrl} alt={`Resume preview for ${name}`} loading="lazy" />
-			) : (
-				<div class="resumePlaceholder" aria-label="Resume placeholder">
-					<p class="placeholderTitle">Resume placeholder</p>
-					<p class="hint">We’ll add a PDF/image later.</p>
-				</div>
-			)}
+		<div class="grid">
+			<section class="section" aria-label="Experience">
+				<h2>Experience</h2>
+				{experience.map((role) => (
+					<article class="role">
+						<header class="roleHeader">
+							<h3 class="roleTitle">{role.title}</h3>
+							<p class="roleMeta">
+								<span class="roleCompany">{role.company}</span>
+								{role.location ? <span> • {role.location}</span> : null}
+								<span> • {role.start}–{role.end}</span>
+							</p>
+						</header>
 
-			<p class="actions">
-				{resumeUrl ? (
-					<a class="button" href={resumeUrl} target="_blank" rel="noreferrer">Open resume</a>
-				) : (
-					<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
-				)}
-			</p>
-		</section>
+						<ul class="bullets">
+							{role.highlights.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+
+						{role.examples?.length ? (
+							<div class="examples">
+								<h4>Example work</h4>
+								<ul class="examplesList">
+									{role.examples.map((ex) => (
+										<li>
+											<span class="exampleTitle">{ex.title}:</span> {ex.detail}
+										</li>
+									))}
+								</ul>
+							</div>
+						) : null}
+					</article>
+				))}
+			</section>
+
+			<aside class="sidebar" aria-label="Details">
+				<section class="section resume" aria-label="Resume">
+					<h2>Resume</h2>
+					{resumeImageUrl ? (
+						<img class="resumeImage" src={resumeImageUrl} alt={`Resume preview for ${name}`} loading="lazy" />
+					) : (
+						<div class="resumePlaceholder" aria-label="Resume placeholder">
+							<p class="placeholderTitle">Resume placeholder</p>
+							<p class="hint">We’ll add a PDF/image later.</p>
+						</div>
+					)}
+
+					<p class="actions">
+						{resumeUrl ? (
+							<a class="button" href={resumeUrl} target="_blank" rel="noreferrer">Open resume</a>
+						) : (
+							<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
+						)}
+					</p>
+				</section>
+
+				<section class="section" aria-label="Skills">
+					<h2>Skills</h2>
+					{skills.map((group) => (
+						<div class="skillGroup">
+							<h3 class="skillTitle">{group.category}</h3>
+							<ul class="pills">
+								{group.items.map((item) => (
+									<li class="pill">{item}</li>
+								))}
+							</ul>
+						</div>
+					))}
+				</section>
+
+				<section class="section" aria-label="Projects">
+					<h2>Projects</h2>
+					{projects.map((p) => (
+						<article class="project">
+							<h3 class="projectTitle">
+								{p.link ? (
+									<a class="projectLink" href={p.link} target="_blank" rel="noreferrer">{p.name}</a>
+								) : (
+									p.name
+								)}
+							</h3>
+							<p class="hint">{p.summary}</p>
+							<ul class="pills">
+								{p.tech.map((t) => (
+									<li class="pill">{t}</li>
+								))}
+							</ul>
+						</article>
+					))}
+				</section>
+			</aside>
+		</div>
 	</section>
 </main>
 
@@ -61,7 +202,7 @@ const {
 	}
 
 	.card {
-		width: min(900px, 100%);
+		width: min(1100px, 100%);
 		background: white;
 		border: 1px solid rgba(0, 0, 0, 0.08);
 		border-radius: 14px;
@@ -89,10 +230,98 @@ const {
 		font-size: 16px;
 	}
 
-	.resume h2 {
+	.grid {
+		display: grid;
+		grid-template-columns: 1.45fr 1fr;
+		gap: 20px;
+		align-items: start;
+	}
+
+	.section {
+		border-top: 1px solid rgba(0, 0, 0, 0.08);
+		padding-top: 16px;
+	}
+
+	.section:first-of-type {
+		border-top: none;
+		padding-top: 0;
+	}
+
+	.section h2 {
 		margin: 0 0 10px;
 		font-size: 18px;
 		color: #111827;
+	}
+
+	.role {
+		padding: 14px 0;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+	}
+
+	.role:last-child {
+		border-bottom: none;
+	}
+
+	.roleHeader {
+		display: grid;
+		gap: 4px;
+	}
+
+	.roleTitle {
+		margin: 0;
+		font-size: 16px;
+		color: #111827;
+	}
+
+	.roleMeta {
+		margin: 0;
+		color: #4b5563;
+		font-size: 14px;
+		line-height: 1.4;
+	}
+
+	.roleCompany {
+		font-weight: 600;
+		color: #374151;
+	}
+
+	.bullets {
+		margin: 10px 0 0;
+		padding-left: 18px;
+		color: #374151;
+		line-height: 1.6;
+	}
+
+	.examples {
+		margin-top: 10px;
+		padding: 12px;
+		border-radius: 12px;
+		background: rgba(17, 24, 39, 0.02);
+		border: 1px solid rgba(0, 0, 0, 0.06);
+	}
+
+	.examples h4 {
+		margin: 0 0 6px;
+		font-size: 14px;
+		color: #111827;
+	}
+
+	.examplesList {
+		margin: 0;
+		padding-left: 18px;
+		color: #374151;
+		line-height: 1.6;
+		font-size: 14px;
+	}
+
+	.exampleTitle {
+		font-weight: 600;
+		color: #111827;
+	}
+
+	.sidebar {
+		display: grid;
+		gap: 16px;
 	}
 
 	.hint {
@@ -154,5 +383,64 @@ const {
 		border: 1px solid rgba(0, 0, 0, 0.08);
 		border-radius: 12px;
 		margin-top: 10px;
+	}
+
+	.skillGroup + .skillGroup {
+		margin-top: 12px;
+	}
+
+	.skillTitle {
+		margin: 0 0 8px;
+		font-size: 14px;
+		color: #111827;
+	}
+
+	.pills {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.pill {
+		padding: 6px 10px;
+		border-radius: 999px;
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		background: rgba(17, 24, 39, 0.02);
+		color: #111827;
+		font-size: 13px;
+	}
+
+	.project + .project {
+		margin-top: 14px;
+	}
+
+	.projectTitle {
+		margin: 0 0 6px;
+		font-size: 15px;
+		color: #111827;
+	}
+
+	.projectLink {
+		color: inherit;
+		text-decoration: none;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+	}
+
+	.projectLink:hover {
+		border-bottom-color: rgba(0, 0, 0, 0.55);
+	}
+
+	@media (max-width: 900px) {
+		.grid {
+			grid-template-columns: 1fr;
+		}
+
+		.section {
+			border-top: none;
+			padding-top: 0;
+		}
 	}
 </style>
