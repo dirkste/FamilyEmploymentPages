@@ -25,10 +25,12 @@ const {
 type ExperienceItem = {
 	title: string;
 	company: string;
+	client?: string;
 	location?: string;
 	start: string;
 	end: string;
 	highlights: string[];
+	achievements?: string[];
 	examples?: { title: string; detail: string }[];
 };
 
@@ -43,6 +45,15 @@ const experience: ExperienceItem[] = [
 			'Worked within a cross-functional Agile team (engineering, business analysis, QA) in an Azure DevOps environment.',
 			'Executed testing strategies to enhance quality delivery across interfaces, databases, and portals.',
 		],
+		achievements: [
+			'Developed a new communication model for sharing onshore knowledge with the offshore team.',
+			'Organized the offshore team into skill-based units so they can focus on specific areas.',
+			'Created new documentation to support onboarding and ongoing maintenance for the team.',
+			'Designed and led the establishment of the support team.',
+			'Designed and implemented a project management process.',
+			'Designed and implemented the group’s UI automation framework.',
+			'Implemented a software CI/CD pipeline for automation.',
+		],
 		examples: [
 			{
 				title: 'Team documentation',
@@ -52,6 +63,70 @@ const experience: ExperienceItem[] = [
 				title: 'Automation framework + CI/CD',
 				detail: 'Designed a UI automation framework and implemented a CI/CD pipeline for automation runs.',
 			},
+		],
+	},
+	{
+		title: 'Test Automation Engineer',
+		company: 'Precision',
+		client: 'Progressive.com',
+		location: 'Atlanta, GA',
+		start: '04/2022',
+		end: '11/2022',
+		highlights: [
+			'Retained to improve existing automation and prioritize a short list of improvement opportunities.',
+			'Presented selected projects for review within the first month.',
+		],
+		achievements: [
+			'Presented to management a list of five key areas of improvement to improve test effectiveness.',
+			'Created and integrated a test data collection tool into existing tests that saved ~500 hours each year.',
+			'Implemented improvements resulting in ~50% faster test execution times across multiple applications.',
+		],
+	},
+	{
+		title: 'Test Engineer (Manual + Automation)',
+		company: 'AIM Consulting',
+		client: 'BECU.org',
+		location: 'Renton, WA',
+		start: '08/2021',
+		end: '04/2022',
+		highlights: [
+			'Served as both manual and automated test engineer.',
+			'Split time between test case development/maintenance and API/UI automation.',
+		],
+		achievements: [
+			'Identified and corrected root cause for more than 34 failing automated UI test scripts.',
+			'Regularly executed full automation regression test passes.',
+			'Documented new and updated existing test cases.',
+		],
+	},
+	{
+		title: 'Test Automation Engineer',
+		company: 'AIM Consulting',
+		client: 'Starbucks',
+		location: 'Redmond, WA',
+		start: '01/2020',
+		end: '02/2021',
+		highlights: [
+			'Developed order label validation for a new order sequencing feature supporting a just-in-time product delivery process.',
+		],
+		achievements: [
+			'Designed and implemented a C# automation routine to confirm correct transaction sequencing.',
+			'Executed daily automated and manual test passes and provided detailed results analysis to management.',
+		],
+	},
+	{
+		title: 'Microsoft Store E2E Test Lead',
+		company: 'RampGroup',
+		location: 'Redmond, WA',
+		start: '05/2013',
+		end: '04/2015',
+		highlights: [
+			'Directed an experienced international team and collaborated with internal and external partners to deliver successful E2E testing for an international ecommerce platform.',
+		],
+		achievements: [
+			'Designed and developed the UI automation test framework utilizing Selenium (WebDriver).',
+			'Designed and implemented test plans for over 20 E2E test projects that increased test improvements.',
+			'Established an effective process for managing offshore resources with clear team priorities and assignments.',
 		],
 	},
 ];
@@ -67,6 +142,20 @@ const technologyExperience: Array<{ label: string; value: string }> = [
 	{ label: 'Testing tools', value: 'SpecFlow, Postman, Selenium, Azure DevOps, Azure build/release pipelines, Git' },
 	{ label: 'Languages & software', value: 'C# 9.0, Selenium, SQL, Salesforce' },
 	{ label: 'Operating systems', value: 'MS Windows 11' },
+];
+
+const education: Array<{ school: string; location: string; detail: string }> = [
+	{
+		school: 'Green River Community College',
+		location: 'Auburn, WA',
+		detail: 'Associates of Arts',
+	},
+];
+
+const certifications: string[] = [
+	'SCRUM Master Certification',
+	'Microsoft Certified Professional (MCP)',
+	'CompTIA A+ Certification',
 ];
 
 const skills: Array<{ category: string; items: string[] }> = [
@@ -118,6 +207,7 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 							<h3 class="roleTitle">{role.title}</h3>
 							<p class="roleMeta">
 								<span class="roleCompany">{role.company}</span>
+								{role.client ? <span> • <span class="roleClient">{role.client}</span></span> : null}
 								{role.location ? <span> • {role.location}</span> : null}
 								<span> • {role.start}–{role.end}</span>
 							</p>
@@ -128,6 +218,17 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 								<li>{item}</li>
 							))}
 						</ul>
+
+						{role.achievements?.length ? (
+							<div class="examples">
+								<h4>Successes &amp; achievements</h4>
+								<ul class="examplesList">
+									{role.achievements.map((item) => (
+										<li>{item}</li>
+									))}
+								</ul>
+							</div>
+						) : null}
 
 						{role.examples?.length ? (
 							<div class="examples">
@@ -211,6 +312,21 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 							</ul>
 						</article>
 					))}
+				</section>
+
+				<section class="section" aria-label="Education and Credentials">
+					<h2>Education &amp; Credentials</h2>
+					{education.map((e) => (
+						<div class="eduRow">
+							<p class="eduSchool">{e.school}</p>
+							<p class="hint">{e.location} • {e.detail}</p>
+						</div>
+					))}
+					<ul class="bullets">
+						{certifications.map((c) => (
+							<li>{c}</li>
+						))}
+					</ul>
 				</section>
 			</aside>
 		</div>
@@ -316,6 +432,11 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 	}
 
 	.roleCompany {
+		font-weight: 600;
+		color: #374151;
+	}
+
+	.roleClient {
 		font-weight: 600;
 		color: #374151;
 	}
@@ -497,6 +618,16 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 
 	.projectLink:hover {
 		border-bottom-color: rgba(0, 0, 0, 0.55);
+	}
+
+	.eduRow + .eduRow {
+		margin-top: 10px;
+	}
+
+	.eduSchool {
+		margin: 0;
+		color: #111827;
+		font-weight: 600;
 	}
 
 	@media (max-width: 900px) {
