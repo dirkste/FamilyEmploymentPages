@@ -159,7 +159,7 @@ const certifications: string[] = [
 ];
 
 const skills: Array<{ category: string; items: string[] }> = [
-	{ category: 'Testing', items: ['Selenium', 'SpecFlow', 'Postman'] },
+	{ category: 'Testing', items: ['SpecFlow', 'Postman'] },
 	{ category: 'C# / .NET', items: ['C# 9.0', '.NET (placeholder)', 'UI automation'] },
 	{ category: 'Data', items: ['SQL'] },
 	{ category: 'DevOps', items: ['Azure DevOps', 'Build/Release pipelines', 'Git'] },
@@ -170,13 +170,11 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		name: 'Automation framework (placeholder)',
 		summary: 'UI automation framework with repeatable runs and CI/CD integration.',
 		tech: ['C#', 'Selenium', 'SpecFlow', 'Azure DevOps'],
-		link: undefined,
 	},
 	{
 		name: 'Documentation + support process (placeholder)',
 		summary: 'Documentation and support workflow improvements to reduce friction and improve team delivery.',
 		tech: ['Process', 'Azure DevOps'],
-		link: undefined,
 	},
 ];
 ---
@@ -383,7 +381,7 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 
 	.grid {
 		display: grid;
-		grid-template-columns: 1.45fr 1fr;
+		grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
 		gap: 20px;
 		align-items: start;
 	}
@@ -393,7 +391,12 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		padding-top: 16px;
 	}
 
-	.section:first-of-type {
+	.grid > .section:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+
+	.sidebar > .section:first-child {
 		border-top: none;
 		padding-top: 0;
 	}
@@ -630,7 +633,7 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		font-weight: 600;
 	}
 
-	@media (max-width: 900px) {
+	@media (max-width: 1024px) {
 		.grid {
 			grid-template-columns: 1fr;
 		}
