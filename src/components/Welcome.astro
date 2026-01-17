@@ -1,6 +1,7 @@
 ---
 type Props = {
 	name?: string;
+	headline?: string;
 	description?: string;
 	/**
 	 * Put a file in /public (e.g. /resume.pdf) and pass that path.
@@ -15,6 +16,7 @@ type Props = {
 
 const {
 	name = 'Your Name',
+	headline = 'Professional Headline',
 	description = 'Short professional summary goes here.',
 	resumeUrl,
 	resumeImageUrl,
@@ -32,57 +34,59 @@ type ExperienceItem = {
 
 const experience: ExperienceItem[] = [
 	{
-		title: 'Software Developer',
-		company: 'Company Name',
-		location: 'City, ST',
-		start: '2022',
+		title: 'Software Development Engineer in Test',
+		company: 'Zillion',
+		location: 'Atlanta, GA',
+		start: '06/2023',
 		end: 'Present',
 		highlights: [
-			'Built and maintained business applications with C#/.NET and SQL.',
-			'Improved performance and reliability via profiling, logging, and targeted refactors.',
-			'Partnered with stakeholders to translate requirements into working features.',
+			'Worked within a cross-functional Agile team (engineering, business analysis, QA) in an Azure DevOps environment.',
+			'Executed testing strategies to enhance quality delivery across interfaces, databases, and portals.',
 		],
 		examples: [
 			{
-				title: 'Automation / batch processing',
-				detail: 'Reduced a manual process to a repeatable job with clear inputs/outputs and auditability.',
+				title: 'Team documentation',
+				detail: 'Created new documentation to support onboarding and ongoing maintenance for the team.',
 			},
 			{
-				title: 'API integration',
-				detail: 'Integrated a third-party service with robust error handling and retries.',
+				title: 'Automation framework + CI/CD',
+				detail: 'Designed a UI automation framework and implemented a CI/CD pipeline for automation runs.',
 			},
-		],
-	},
-	{
-		title: 'Developer / Analyst',
-		company: 'Company Name',
-		start: '2019',
-		end: '2022',
-		highlights: [
-			'Delivered reporting and data workflows using Python and SQL.',
-			'Created documentation and handoffs to keep systems maintainable.',
 		],
 	},
 ];
 
+const summaryBullets: string[] = [
+	'Solution-oriented professional with more than 15 years of executing testing strategies to improve quality delivery across Agile environments.',
+	'Strength in defining automated and manual testing strategies to validate functionality and drive resolution of defects.',
+	'Skilled in developing and integrating automated testing tools into environments to strengthen identification of key bugs across user interfaces, middle-tier, and database layers.',
+	'Outstanding communication and liaison skills; effective collaboration with management, customers, vendors, and teams.',
+];
+
+const technologyExperience: Array<{ label: string; value: string }> = [
+	{ label: 'Testing tools', value: 'SpecFlow, Postman, Selenium, Azure DevOps, Azure build/release pipelines, Git' },
+	{ label: 'Languages & software', value: 'C# 9.0, Selenium, SQL, Salesforce' },
+	{ label: 'Operating systems', value: 'MS Windows 11' },
+];
+
 const skills: Array<{ category: string; items: string[] }> = [
-	{ category: 'C# / .NET', items: ['ASP.NET', 'APIs', 'LINQ', 'Testing (placeholder)'] },
-	{ category: 'Python', items: ['Automation', 'Data processing', 'Scripting'] },
-	{ category: 'Data', items: ['SQL', 'ETL concepts', 'Reporting'] },
-	{ category: 'Tools', items: ['Git', 'CI/CD (placeholder)', 'Docker (placeholder)'] },
+	{ category: 'Testing', items: ['Selenium', 'SpecFlow', 'Postman'] },
+	{ category: 'C# / .NET', items: ['C# 9.0', '.NET (placeholder)', 'UI automation'] },
+	{ category: 'Data', items: ['SQL'] },
+	{ category: 'DevOps', items: ['Azure DevOps', 'Build/Release pipelines', 'Git'] },
 ];
 
 const projects: Array<{ name: string; summary: string; tech: string[]; link?: string }> = [
 	{
-		name: 'Project Name',
-		summary: 'Short description of what it does and why it matters.',
-		tech: ['C#', '.NET', 'SQL'],
+		name: 'Automation framework (placeholder)',
+		summary: 'UI automation framework with repeatable runs and CI/CD integration.',
+		tech: ['C#', 'Selenium', 'SpecFlow', 'Azure DevOps'],
 		link: undefined,
 	},
 	{
-		name: 'Project Name',
-		summary: 'Short description of problem solved, approach, and outcome.',
-		tech: ['Python', 'Automation'],
+		name: 'Documentation + support process (placeholder)',
+		summary: 'Documentation and support workflow improvements to reduce friction and improve team delivery.',
+		tech: ['Process', 'Azure DevOps'],
 		link: undefined,
 	},
 ];
@@ -92,10 +96,20 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 	<section class="card" aria-label="Profile">
 		<header class="hero">
 			<h1 class="name">{name}</h1>
+			<p class="headline">{headline}</p>
 			<p class="desc">{description}</p>
 		</header>
 
 		<div class="grid">
+			<section class="section" aria-label="Summary">
+				<h2>Summary</h2>
+				<ul class="bullets">
+					{summaryBullets.map((item) => (
+						<li>{item}</li>
+					))}
+				</ul>
+			</section>
+
 			<section class="section" aria-label="Experience">
 				<h2>Experience</h2>
 				{experience.map((role) => (
@@ -132,6 +146,18 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 			</section>
 
 			<aside class="sidebar" aria-label="Details">
+				<section class="section" aria-label="Technology Experience">
+					<h2>Technology</h2>
+					<dl class="techTable">
+						{technologyExperience.map((row) => (
+							<div class="techRow">
+								<dt class="techLabel">{row.label}</dt>
+								<dd class="techValue">{row.value}</dd>
+							</div>
+						))}
+					</dl>
+				</section>
+
 				<section class="section resume" aria-label="Resume">
 					<h2>Resume</h2>
 					{resumeImageUrl ? (
@@ -230,6 +256,15 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		font-size: 16px;
 	}
 
+	.headline {
+		margin: 0;
+		color: #111827;
+		font-weight: 600;
+		font-size: 14px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
 	.grid {
 		display: grid;
 		grid-template-columns: 1.45fr 1fr;
@@ -322,6 +357,37 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 	.sidebar {
 		display: grid;
 		gap: 16px;
+	}
+
+	.techTable {
+		margin: 0;
+		display: grid;
+		gap: 10px;
+	}
+
+	.techRow {
+		display: grid;
+		grid-template-columns: 160px 1fr;
+		gap: 10px;
+		align-items: start;
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		border-radius: 12px;
+		padding: 10px 12px;
+		background: rgba(17, 24, 39, 0.02);
+	}
+
+	.techLabel {
+		margin: 0;
+		color: #111827;
+		font-weight: 600;
+		font-size: 13px;
+	}
+
+	.techValue {
+		margin: 0;
+		color: #374151;
+		font-size: 13px;
+		line-height: 1.6;
 	}
 
 	.hint {
@@ -435,6 +501,10 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 
 	@media (max-width: 900px) {
 		.grid {
+			grid-template-columns: 1fr;
+		}
+
+		.techRow {
 			grid-template-columns: 1fr;
 		}
 
