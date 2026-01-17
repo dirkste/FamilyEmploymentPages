@@ -1,46 +1,40 @@
-# Astro Starter Kit: Basics
+# Employment Background
 
-```sh
-npm create astro@latest -- --template basics
-```
+Static Astro site for a resume-style employment background + evolving portfolio.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Current implemented state
 
-## 🚀 Project Structure
+- Single-page resume/portfolio layout rendered at `/`.
+- Page entry: `src/pages/index.astro` (wraps the layout + the main content component).
+- Main content: `src/components/Welcome.astro` (resume-style sections + placeholders).
+- No integrations, API/server routes, or content collections configured.
 
-Inside of your Astro project, you'll see the following folders and files:
+### Placeholder content conventions
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+- Resume PDF: put a file in `public/` (e.g. `public/resume.pdf`) and pass `resumeUrl="/resume.pdf"`.
+- Optional preview image: put `public/resume.png` and pass `resumeImageUrl="/resume.png"`.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Commands
 
-## 🧞 Commands
+Run from the repo root:
 
-All commands are run from the root of the project, from a terminal:
+- Install: `npm install`
+- Dev server: `npm run dev` (default `http://localhost:4321`)
+- Production build: `npm run build` (outputs `dist/`)
+- Preview build: `npm run preview`
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Repo notes
 
-## 👀 Want to learn more?
+- Astro config: `astro.config.mjs`
+- TypeScript: strict config via `astro/tsconfigs/strict` (see `tsconfig.json`)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Docs
+
+- Ideas/backlog: `docs/portfolio-sections-ideas.md`
+- Progress log: `docs/progress-log.md`
+
+## Workflow notes (GitHub)
+
+- No CI is configured in this repo; run `npm run build` before pushing/merging.
+- If using PRs: keep changes on feature branches and use PR review for anything non-trivial.
+- Track notable changes in `docs/progress-log.md`.
