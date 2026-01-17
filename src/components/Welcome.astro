@@ -1,6 +1,7 @@
 ---
 type Props = {
 	name?: string;
+	headline?: string;
 	description?: string;
 	/**
 	 * Put a file in /public (e.g. /resume.pdf) and pass that path.
@@ -15,38 +16,318 @@ type Props = {
 
 const {
 	name = 'Your Name',
+	headline = 'Professional Headline',
 	description = 'Short professional summary goes here.',
 	resumeUrl,
 	resumeImageUrl,
 } = Astro.props as Props;
+
+type ExperienceItem = {
+	title: string;
+	company: string;
+	client?: string;
+	location?: string;
+	start: string;
+	end: string;
+	highlights: string[];
+	achievements?: string[];
+	examples?: { title: string; detail: string }[];
+};
+
+const experience: ExperienceItem[] = [
+	{
+		title: 'Software Development Engineer in Test',
+		company: 'Zillion',
+		location: 'Atlanta, GA',
+		start: '06/2023',
+		end: 'Present',
+		highlights: [
+			'Worked within a cross-functional Agile team (engineering, business analysis, QA) in an Azure DevOps environment.',
+			'Executed testing strategies to enhance quality delivery across interfaces, databases, and portals.',
+		],
+		achievements: [
+			'Developed a new communication model for sharing onshore knowledge with the offshore team.',
+			'Organized the offshore team into skill-based units so they can focus on specific areas.',
+			'Created new documentation to support onboarding and ongoing maintenance for the team.',
+			'Designed and led the establishment of the support team.',
+			'Designed and implemented a project management process.',
+			'Designed and implemented the group’s UI automation framework.',
+			'Implemented a software CI/CD pipeline for automation.',
+		],
+		examples: [
+			{
+				title: 'Team documentation',
+				detail: 'Created new documentation to support onboarding and ongoing maintenance for the team.',
+			},
+			{
+				title: 'Automation framework + CI/CD',
+				detail: 'Designed a UI automation framework and implemented a CI/CD pipeline for automation runs.',
+			},
+		],
+	},
+	{
+		title: 'Test Automation Engineer',
+		company: 'Precision',
+		client: 'Progressive.com',
+		location: 'Atlanta, GA',
+		start: '04/2022',
+		end: '11/2022',
+		highlights: [
+			'Retained to improve existing automation and prioritize a short list of improvement opportunities.',
+			'Presented selected projects for review within the first month.',
+		],
+		achievements: [
+			'Presented to management a list of five key areas of improvement to improve test effectiveness.',
+			'Created and integrated a test data collection tool into existing tests that saved ~500 hours each year.',
+			'Implemented improvements resulting in ~50% faster test execution times across multiple applications.',
+		],
+	},
+	{
+		title: 'Test Engineer (Manual + Automation)',
+		company: 'AIM Consulting',
+		client: 'BECU.org',
+		location: 'Renton, WA',
+		start: '08/2021',
+		end: '04/2022',
+		highlights: [
+			'Served as both manual and automated test engineer.',
+			'Split time between test case development/maintenance and API/UI automation.',
+		],
+		achievements: [
+			'Identified and corrected root cause for more than 34 failing automated UI test scripts.',
+			'Regularly executed full automation regression test passes.',
+			'Documented new and updated existing test cases.',
+		],
+	},
+	{
+		title: 'Test Automation Engineer',
+		company: 'AIM Consulting',
+		client: 'Starbucks',
+		location: 'Redmond, WA',
+		start: '01/2020',
+		end: '02/2021',
+		highlights: [
+			'Developed order label validation for a new order sequencing feature supporting a just-in-time product delivery process.',
+		],
+		achievements: [
+			'Designed and implemented a C# automation routine to confirm correct transaction sequencing.',
+			'Executed daily automated and manual test passes and provided detailed results analysis to management.',
+		],
+	},
+	{
+		title: 'Microsoft Store E2E Test Lead',
+		company: 'RampGroup',
+		location: 'Redmond, WA',
+		start: '05/2013',
+		end: '04/2015',
+		highlights: [
+			'Directed an experienced international team and collaborated with internal and external partners to deliver successful E2E testing for an international ecommerce platform.',
+		],
+		achievements: [
+			'Designed and developed the UI automation test framework utilizing Selenium (WebDriver).',
+			'Designed and implemented test plans for over 20 E2E test projects that increased test improvements.',
+			'Established an effective process for managing offshore resources with clear team priorities and assignments.',
+		],
+	},
+];
+
+const summaryBullets: string[] = [
+	'Solution-oriented professional with more than 15 years of executing testing strategies to improve quality delivery across Agile environments.',
+	'Strength in defining automated and manual testing strategies to validate functionality and drive resolution of defects.',
+	'Skilled in developing and integrating automated testing tools into environments to strengthen identification of key bugs across user interfaces, middle-tier, and database layers.',
+	'Outstanding communication and liaison skills; effective collaboration with management, customers, vendors, and teams.',
+];
+
+const technologyExperience: Array<{ label: string; value: string }> = [
+	{ label: 'Testing tools', value: 'SpecFlow, Postman, Selenium, Azure DevOps, Azure build/release pipelines, Git' },
+	{ label: 'Languages & software', value: 'C# 9.0, Selenium, SQL, Salesforce' },
+	{ label: 'Operating systems', value: 'MS Windows 11' },
+];
+
+const education: Array<{ school: string; location: string; detail: string }> = [
+	{
+		school: 'Green River Community College',
+		location: 'Auburn, WA',
+		detail: 'Associates of Arts',
+	},
+];
+
+const certifications: string[] = [
+	'SCRUM Master Certification',
+	'Microsoft Certified Professional (MCP)',
+	'CompTIA A+ Certification',
+];
+
+const skills: Array<{ category: string; items: string[] }> = [
+	{ category: 'Testing', items: ['SpecFlow', 'Postman'] },
+	{ category: 'C# / .NET', items: ['C# 9.0', '.NET (placeholder)', 'UI automation'] },
+	{ category: 'Data', items: ['SQL'] },
+	{ category: 'DevOps', items: ['Azure DevOps', 'Build/Release pipelines', 'Git'] },
+];
+
+const projects: Array<{ name: string; summary: string; tech: string[]; link?: string }> = [
+	{
+		name: 'Automation framework (placeholder)',
+		summary: 'UI automation framework with repeatable runs and CI/CD integration.',
+		tech: ['C#', 'Selenium', 'SpecFlow', 'Azure DevOps'],
+	},
+	{
+		name: 'Documentation + support process (placeholder)',
+		summary: 'Documentation and support workflow improvements to reduce friction and improve team delivery.',
+		tech: ['Process', 'Azure DevOps'],
+	},
+];
 ---
 
 <main class="page">
 	<section class="card" aria-label="Profile">
 		<header class="hero">
 			<h1 class="name">{name}</h1>
+			<p class="headline">{headline}</p>
 			<p class="desc">{description}</p>
 		</header>
 
-		<section class="resume" aria-label="Resume">
-			<h2>Resume</h2>
-			{resumeImageUrl ? (
-				<img class="resumeImage" src={resumeImageUrl} alt={`Resume preview for ${name}`} loading="lazy" />
-			) : (
-				<div class="resumePlaceholder" aria-label="Resume placeholder">
-					<p class="placeholderTitle">Resume placeholder</p>
-					<p class="hint">We’ll add a PDF/image later.</p>
-				</div>
-			)}
+		<div class="grid">
+			<section class="section" aria-label="Summary">
+				<h2>Summary</h2>
+				<ul class="bullets">
+					{summaryBullets.map((item) => (
+						<li>{item}</li>
+					))}
+				</ul>
+			</section>
 
-			<p class="actions">
-				{resumeUrl ? (
-					<a class="button" href={resumeUrl} target="_blank" rel="noreferrer">Open resume</a>
-				) : (
-					<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
-				)}
-			</p>
-		</section>
+			<section class="section" aria-label="Experience">
+				<h2>Experience</h2>
+				{experience.map((role) => (
+					<article class="role">
+						<header class="roleHeader">
+							<h3 class="roleTitle">{role.title}</h3>
+							<p class="roleMeta">
+								<span class="roleCompany">{role.company}</span>
+								{role.client ? <span> • <span class="roleClient">{role.client}</span></span> : null}
+								{role.location ? <span> • {role.location}</span> : null}
+								<span> • {role.start}–{role.end}</span>
+							</p>
+						</header>
+
+						<ul class="bullets">
+							{role.highlights.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+
+						{role.achievements?.length ? (
+							<div class="examples">
+								<h4>Successes &amp; achievements</h4>
+								<ul class="examplesList">
+									{role.achievements.map((item) => (
+										<li>{item}</li>
+									))}
+								</ul>
+							</div>
+						) : null}
+
+						{role.examples?.length ? (
+							<div class="examples">
+								<h4>Example work</h4>
+								<ul class="examplesList">
+									{role.examples.map((ex) => (
+										<li>
+											<span class="exampleTitle">{ex.title}:</span> {ex.detail}
+										</li>
+									))}
+								</ul>
+							</div>
+						) : null}
+					</article>
+				))}
+			</section>
+
+			<aside class="sidebar" aria-label="Details">
+				<section class="section" aria-label="Technology Experience">
+					<h2>Technology</h2>
+					<dl class="techTable">
+						{technologyExperience.map((row) => (
+							<div class="techRow">
+								<dt class="techLabel">{row.label}</dt>
+								<dd class="techValue">{row.value}</dd>
+							</div>
+						))}
+					</dl>
+				</section>
+
+				<section class="section resume" aria-label="Resume">
+					<h2>Resume</h2>
+					{resumeImageUrl ? (
+						<img class="resumeImage" src={resumeImageUrl} alt={`Resume preview for ${name}`} loading="lazy" />
+					) : (
+						<div class="resumePlaceholder" aria-label="Resume placeholder">
+							<p class="placeholderTitle">Resume placeholder</p>
+							<p class="hint">We’ll add a PDF/image later.</p>
+						</div>
+					)}
+
+					<p class="actions">
+						{resumeUrl ? (
+							<a class="button" href={resumeUrl} target="_blank" rel="noreferrer">Open resume</a>
+						) : (
+							<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
+						)}
+					</p>
+				</section>
+
+				<section class="section" aria-label="Skills">
+					<h2>Skills</h2>
+					{skills.map((group) => (
+						<div class="skillGroup">
+							<h3 class="skillTitle">{group.category}</h3>
+							<ul class="pills">
+								{group.items.map((item) => (
+									<li class="pill">{item}</li>
+								))}
+							</ul>
+						</div>
+					))}
+				</section>
+
+				<section class="section" aria-label="Projects">
+					<h2>Projects</h2>
+					{projects.map((p) => (
+						<article class="project">
+							<h3 class="projectTitle">
+								{p.link ? (
+									<a class="projectLink" href={p.link} target="_blank" rel="noreferrer">{p.name}</a>
+								) : (
+									p.name
+								)}
+							</h3>
+							<p class="hint">{p.summary}</p>
+							<ul class="pills">
+								{p.tech.map((t) => (
+									<li class="pill">{t}</li>
+								))}
+							</ul>
+						</article>
+					))}
+				</section>
+
+				<section class="section" aria-label="Education and Credentials">
+					<h2>Education &amp; Credentials</h2>
+					{education.map((e) => (
+						<div class="eduRow">
+							<p class="eduSchool">{e.school}</p>
+							<p class="hint">{e.location} • {e.detail}</p>
+						</div>
+					))}
+					<ul class="bullets">
+						{certifications.map((c) => (
+							<li>{c}</li>
+						))}
+					</ul>
+				</section>
+			</aside>
+		</div>
 	</section>
 </main>
 
@@ -61,7 +342,7 @@ const {
 	}
 
 	.card {
-		width: min(900px, 100%);
+		width: min(1100px, 100%);
 		background: white;
 		border: 1px solid rgba(0, 0, 0, 0.08);
 		border-radius: 14px;
@@ -89,10 +370,148 @@ const {
 		font-size: 16px;
 	}
 
-	.resume h2 {
+	.headline {
+		margin: 0;
+		color: #111827;
+		font-weight: 600;
+		font-size: 14px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+		gap: 20px;
+		align-items: start;
+	}
+
+	.section {
+		border-top: 1px solid rgba(0, 0, 0, 0.08);
+		padding-top: 16px;
+	}
+
+	.grid > .section:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+
+	.sidebar > .section:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+
+	.section h2 {
 		margin: 0 0 10px;
 		font-size: 18px;
 		color: #111827;
+	}
+
+	.role {
+		padding: 14px 0;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+	}
+
+	.role:last-child {
+		border-bottom: none;
+	}
+
+	.roleHeader {
+		display: grid;
+		gap: 4px;
+	}
+
+	.roleTitle {
+		margin: 0;
+		font-size: 16px;
+		color: #111827;
+	}
+
+	.roleMeta {
+		margin: 0;
+		color: #4b5563;
+		font-size: 14px;
+		line-height: 1.4;
+	}
+
+	.roleCompany {
+		font-weight: 600;
+		color: #374151;
+	}
+
+	.roleClient {
+		font-weight: 600;
+		color: #374151;
+	}
+
+	.bullets {
+		margin: 10px 0 0;
+		padding-left: 18px;
+		color: #374151;
+		line-height: 1.6;
+	}
+
+	.examples {
+		margin-top: 10px;
+		padding: 12px;
+		border-radius: 12px;
+		background: rgba(17, 24, 39, 0.02);
+		border: 1px solid rgba(0, 0, 0, 0.06);
+	}
+
+	.examples h4 {
+		margin: 0 0 6px;
+		font-size: 14px;
+		color: #111827;
+	}
+
+	.examplesList {
+		margin: 0;
+		padding-left: 18px;
+		color: #374151;
+		line-height: 1.6;
+		font-size: 14px;
+	}
+
+	.exampleTitle {
+		font-weight: 600;
+		color: #111827;
+	}
+
+	.sidebar {
+		display: grid;
+		gap: 16px;
+	}
+
+	.techTable {
+		margin: 0;
+		display: grid;
+		gap: 10px;
+	}
+
+	.techRow {
+		display: grid;
+		grid-template-columns: 160px 1fr;
+		gap: 10px;
+		align-items: start;
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		border-radius: 12px;
+		padding: 10px 12px;
+		background: rgba(17, 24, 39, 0.02);
+	}
+
+	.techLabel {
+		margin: 0;
+		color: #111827;
+		font-weight: 600;
+		font-size: 13px;
+	}
+
+	.techValue {
+		margin: 0;
+		color: #374151;
+		font-size: 13px;
+		line-height: 1.6;
 	}
 
 	.hint {
@@ -154,5 +573,78 @@ const {
 		border: 1px solid rgba(0, 0, 0, 0.08);
 		border-radius: 12px;
 		margin-top: 10px;
+	}
+
+	.skillGroup + .skillGroup {
+		margin-top: 12px;
+	}
+
+	.skillTitle {
+		margin: 0 0 8px;
+		font-size: 14px;
+		color: #111827;
+	}
+
+	.pills {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.pill {
+		padding: 6px 10px;
+		border-radius: 999px;
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		background: rgba(17, 24, 39, 0.02);
+		color: #111827;
+		font-size: 13px;
+	}
+
+	.project + .project {
+		margin-top: 14px;
+	}
+
+	.projectTitle {
+		margin: 0 0 6px;
+		font-size: 15px;
+		color: #111827;
+	}
+
+	.projectLink {
+		color: inherit;
+		text-decoration: none;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+	}
+
+	.projectLink:hover {
+		border-bottom-color: rgba(0, 0, 0, 0.55);
+	}
+
+	.eduRow + .eduRow {
+		margin-top: 10px;
+	}
+
+	.eduSchool {
+		margin: 0;
+		color: #111827;
+		font-weight: 600;
+	}
+
+	@media (max-width: 1024px) {
+		.grid {
+			grid-template-columns: 1fr;
+		}
+
+		.techRow {
+			grid-template-columns: 1fr;
+		}
+
+		.section {
+			border-top: none;
+			padding-top: 0;
+		}
 	}
 </style>
