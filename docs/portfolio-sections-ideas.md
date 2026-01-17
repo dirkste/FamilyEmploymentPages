@@ -47,6 +47,15 @@ Examples (placeholders to fill later):
 - Recovering a failing test suite by fixing root causes and stabilizing patterns
 - Scaling communication/process between onshore/offshore teams
 
+## Section: Professional referrals / references
+High signal when handled carefully: adds credibility without publishing sensitive info.
+
+Privacy-safe guidance:
+- Do **not** publish names, emails, phone numbers, or employer-internal details by default.
+- Prefer a simple line like: **“Professional references available upon request.”**
+- If you want more detail publicly, list only high-level context (no PII), e.g. “Former engineering manager (2019–2021) — can speak to test strategy + cross-team collaboration.”
+- Share contact details only in private conversations (recruiter/hiring manager) or via a separate, non-indexed document.
+
 ## Other complementary sections (optional)
 - **Toolbox**: keep it concise; link to evidence in projects
 - **Process / how I work**: short bullets (PR hygiene, reviews, test strategy)
