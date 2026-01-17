@@ -289,7 +289,7 @@ const recentActivity: RecentActivityItem[] = [
 
 					<p class="actions">
 						{resumeUrl ? (
-							<a class="button" href={resumeUrl} target="_blank" rel="noreferrer">Open resume</a>
+							<a class="button" href={resumeUrl} target="_blank" rel="noreferrer noopener">Open resume</a>
 						) : (
 							<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
 						)}
@@ -318,7 +318,7 @@ const recentActivity: RecentActivityItem[] = [
 								<p class="activityMeta">
 									<span class="activityDate">{item.date}</span>
 									{item.link ? (
-										<a class="activityLink" href={item.link.href} target="_blank" rel="noreferrer">{item.link.label}</a>
+										<a class="activityLink" href={item.link.href} target="_blank" rel="noreferrer noopener">{item.link.label}</a>
 									) : null}
 								</p>
 								<h3 class="activityTitle">{item.title}</h3>
@@ -355,7 +355,7 @@ const recentActivity: RecentActivityItem[] = [
 						<article class="project">
 							<h3 class="projectTitle">
 								{p.link ? (
-									<a class="projectLink" href={p.link} target="_blank" rel="noreferrer">{p.name}</a>
+									<a class="projectLink" href={p.link} target="_blank" rel="noreferrer noopener">{p.name}</a>
 								) : (
 									p.name
 								)}
