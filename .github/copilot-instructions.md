@@ -12,6 +12,10 @@
 - Preview built site: `npm run preview`
 - Astro CLI passthrough: `npm run astro -- <args>`
 
+## Git workflow (repo practice)
+- Prefer feature branches + PRs for non-trivial changes; keep `main` merge-ready.
+- Run `npm run build` before opening/merging a PR (no CI configured yet).
+
 ## Code patterns used here
 - `.astro` files use the frontmatter block for imports/logic, then template markup.
   - Example page imports layout + component: [src/pages/index.astro](../src/pages/index.astro)
