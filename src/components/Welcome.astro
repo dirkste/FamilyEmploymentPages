@@ -177,6 +177,35 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		tech: ['Process', 'Azure DevOps'],
 	},
 ];
+
+type RecentActivityItem = {
+	date: string;
+	title: string;
+	detail: string;
+	tags?: string[];
+	link?: { href: string; label: string };
+};
+
+const recentActivity: RecentActivityItem[] = [
+	{
+		date: '2026',
+		title: 'Expanded this site into a resume-style portfolio',
+		detail: 'Built out Summary, Technology, Experience, Skills, Projects, and Education sections and iterated via PR review feedback.',
+		tags: ['Astro', 'TypeScript', 'CSS'],
+	},
+	{
+		date: '2026',
+		title: 'Adopted a feature-branch + PR workflow',
+		detail: 'Used short-lived branches with squash merges to keep `main` deployable and changes reviewable.',
+		tags: ['Git', 'GitHub'],
+	},
+	{
+		date: 'Next',
+		title: 'Add project case studies',
+		detail: 'Planning to add deeper “Code Projects” entries with context, approach, and outcomes (sanitized and public-safe).',
+		tags: ['Portfolio'],
+	},
+];
 ---
 
 <main class="page">
@@ -255,6 +284,31 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 							</div>
 						))}
 					</dl>
+				</section>
+
+				<section class="section" aria-label="Recent Activity">
+					<h2>Recent Activity</h2>
+					<div class="activityList">
+						{recentActivity.map((item) => (
+							<article class="activityItem">
+								<p class="activityMeta">
+									<span class="activityDate">{item.date}</span>
+									{item.link ? (
+										<a class="activityLink" href={item.link.href} target="_blank" rel="noreferrer">{item.link.label}</a>
+									) : null}
+								</p>
+								<h3 class="activityTitle">{item.title}</h3>
+								<p class="hint">{item.detail}</p>
+								{item.tags?.length ? (
+									<ul class="pills">
+										{item.tags.map((t) => (
+											<li class="pill">{t}</li>
+										))}
+									</ul>
+								) : null}
+							</article>
+						))}
+					</div>
 				</section>
 
 				<section class="section resume" aria-label="Resume">
@@ -498,6 +552,49 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		border-radius: 12px;
 		padding: 10px 12px;
 		background: rgba(17, 24, 39, 0.02);
+	}
+
+	.activityList {
+		display: grid;
+		gap: 12px;
+	}
+
+	.activityItem {
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		border-radius: 12px;
+		padding: 12px;
+		background: rgba(17, 24, 39, 0.02);
+	}
+
+	.activityMeta {
+		margin: 0 0 6px;
+		display: flex;
+		gap: 10px;
+		align-items: baseline;
+		justify-content: space-between;
+		color: #4b5563;
+		font-size: 12px;
+	}
+
+	.activityDate {
+		font-weight: 600;
+		color: #374151;
+	}
+
+	.activityLink {
+		color: inherit;
+		text-decoration: none;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+	}
+
+	.activityLink:hover {
+		border-bottom-color: rgba(0, 0, 0, 0.55);
+	}
+
+	.activityTitle {
+		margin: 0 0 6px;
+		font-size: 14px;
+		color: #111827;
 	}
 
 	.techLabel {
