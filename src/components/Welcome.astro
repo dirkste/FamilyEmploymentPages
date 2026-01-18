@@ -144,6 +144,8 @@ const technologyExperience: Array<{ label: string; value: string }> = [
 	{ label: 'Operating systems', value: 'MS Windows 11' },
 ];
 
+const quickTechnology = technologyExperience[0];
+
 const education: Array<{ school: string; location: string; detail: string }> = [
 	{
 		school: 'Green River Community College',
@@ -218,6 +220,12 @@ const recentActivity: RecentActivityItem[] = [
 
 		<div class="layoutGrid">
 			<div class="primaryColumn">
+				<div class="sideContainer">
+					<p class="sideContainerTitle">Technology (sample)</p>
+					<p class="sideContainerText">
+						<span class="sideContainerLabel">{quickTechnology.label}:</span> {quickTechnology.value}
+					</p>
+				</div>
 				<section class="section" aria-label="Summary">
 					<h2>Summary</h2>
 					<ul class="bullets">
@@ -451,6 +459,39 @@ const recentActivity: RecentActivityItem[] = [
 		gap: 16px;
 	}
 
+	.sideContainer {
+		width: 200px;
+		height: 100px;
+		border: 1px solid rgba(0, 0, 0, 0.18);
+		border-radius: 12px;
+		padding: 12px;
+		background: rgba(17, 24, 39, 0.02);
+		display: grid;
+		align-content: start;
+		gap: 6px;
+	}
+
+	.sideContainerTitle {
+		margin: 0;
+		font-weight: 700;
+		color: #111827;
+		font-size: 13px;
+	}
+
+	.sideContainerText {
+		margin: 0;
+		color: #4b5563;
+		font-size: 13px;
+		line-height: 1.4;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.sideContainerLabel {
+		font-weight: 700;
+		color: #111827;
+	}
+
 	.centerColumn {
 		display: grid;
 		gap: 16px;
@@ -461,7 +502,7 @@ const recentActivity: RecentActivityItem[] = [
 		padding-top: 16px;
 	}
 
-	.primaryColumn > .section:first-child {
+	.primaryColumn > .section:first-of-type {
 		border-top: none;
 		padding-top: 0;
 	}
