@@ -218,6 +218,10 @@ const recentActivity: RecentActivityItem[] = [
 
 		<div class="layoutGrid">
 			<div class="primaryColumn">
+				<div class="sideContainer">
+					<p class="sideContainerTitle">Sidebar sample</p>
+					<p class="sideContainerText">Sample text inside a bordered container.</p>
+				</div>
 				<section class="section" aria-label="Summary">
 					<h2>Summary</h2>
 					<ul class="bullets">
@@ -451,6 +455,32 @@ const recentActivity: RecentActivityItem[] = [
 		gap: 16px;
 	}
 
+	.sideContainer {
+		width: 200px;
+		height: 100px;
+		border: 1px solid rgba(0, 0, 0, 0.18);
+		border-radius: 12px;
+		padding: 12px;
+		background: rgba(17, 24, 39, 0.02);
+		display: grid;
+		align-content: start;
+		gap: 6px;
+	}
+
+	.sideContainerTitle {
+		margin: 0;
+		font-weight: 700;
+		color: #111827;
+		font-size: 13px;
+	}
+
+	.sideContainerText {
+		margin: 0;
+		color: #4b5563;
+		font-size: 13px;
+		line-height: 1.4;
+	}
+
 	.centerColumn {
 		display: grid;
 		gap: 16px;
@@ -461,7 +491,7 @@ const recentActivity: RecentActivityItem[] = [
 		padding-top: 16px;
 	}
 
-	.primaryColumn > .section:first-child {
+	.primaryColumn > .section:first-of-type {
 		border-top: none;
 		padding-top: 0;
 	}
