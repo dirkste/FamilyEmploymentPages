@@ -144,6 +144,8 @@ const technologyExperience: Array<{ label: string; value: string }> = [
 	{ label: 'Operating systems', value: 'MS Windows 11' },
 ];
 
+const quickTechnology = technologyExperience[0];
+
 const education: Array<{ school: string; location: string; detail: string }> = [
 	{
 		school: 'Green River Community College',
@@ -219,8 +221,10 @@ const recentActivity: RecentActivityItem[] = [
 		<div class="layoutGrid">
 			<div class="primaryColumn">
 				<div class="sideContainer">
-					<p class="sideContainerTitle">Sidebar sample</p>
-					<p class="sideContainerText">Sample text inside a bordered container.</p>
+					<p class="sideContainerTitle">Technology (sample)</p>
+					<p class="sideContainerText">
+						<span class="sideContainerLabel">{quickTechnology.label}:</span> {quickTechnology.value}
+					</p>
 				</div>
 				<section class="section" aria-label="Summary">
 					<h2>Summary</h2>
@@ -479,6 +483,13 @@ const recentActivity: RecentActivityItem[] = [
 		color: #4b5563;
 		font-size: 13px;
 		line-height: 1.4;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.sideContainerLabel {
+		font-weight: 700;
+		color: #111827;
 	}
 
 	.centerColumn {
