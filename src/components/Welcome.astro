@@ -177,6 +177,35 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		tech: ['Process', 'Azure DevOps'],
 	},
 ];
+
+type RecentActivityItem = {
+	date: string;
+	title: string;
+	detail: string;
+	tags?: string[];
+	link?: { href: string; label: string };
+};
+
+const recentActivity: RecentActivityItem[] = [
+	{
+		date: '2026',
+		title: 'Expanded this site into a resume-style portfolio',
+		detail: 'Built out Summary, Technology, Experience, Skills, Projects, and Education sections and iterated via PR review feedback.',
+		tags: ['Astro', 'TypeScript', 'CSS'],
+	},
+	{
+		date: '2026',
+		title: 'Adopted a feature-branch + PR workflow',
+		detail: 'Used short-lived branches with squash merges to keep `main` deployable and changes reviewable.',
+		tags: ['Git', 'GitHub'],
+	},
+	{
+		date: 'Next',
+		title: 'Add project case studies',
+		detail: 'Planning to add deeper “Code Projects” entries with context, approach, and outcomes (sanitized and public-safe).',
+		tags: ['Portfolio'],
+	},
+];
 ---
 
 <main class="page">
@@ -187,62 +216,88 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 			<p class="desc">{description}</p>
 		</header>
 
-		<div class="grid">
-			<section class="section" aria-label="Summary">
-				<h2>Summary</h2>
-				<ul class="bullets">
-					{summaryBullets.map((item) => (
-						<li>{item}</li>
+		<div class="layoutGrid">
+			<div class="primaryColumn">
+				<section class="section" aria-label="Summary">
+					<h2>Summary</h2>
+					<ul class="bullets">
+						{summaryBullets.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</section>
+
+				<section class="section" aria-label="Experience">
+					<h2>Experience</h2>
+					{experience.map((role) => (
+						<article class="role">
+							<header class="roleHeader">
+								<h3 class="roleTitle">{role.title}</h3>
+								<p class="roleMeta">
+									<span class="roleCompany">{role.company}</span>
+									{role.client ? <span> • <span class="roleClient">{role.client}</span></span> : null}
+									{role.location ? <span> • {role.location}</span> : null}
+									<span> • {role.start}–{role.end}</span>
+								</p>
+							</header>
+
+							<ul class="bullets">
+								{role.highlights.map((item) => (
+									<li>{item}</li>
+								))}
+							</ul>
+
+							{role.achievements?.length ? (
+								<div class="examples">
+									<h4>Successes &amp; achievements</h4>
+									<ul class="examplesList">
+										{role.achievements.map((item) => (
+											<li>{item}</li>
+										))}
+									</ul>
+								</div>
+							) : null}
+
+							{role.examples?.length ? (
+								<div class="examples">
+									<h4>Example work</h4>
+									<ul class="examplesList">
+										{role.examples.map((ex) => (
+											<li>
+												<span class="exampleTitle">{ex.title}:</span> {ex.detail}
+											</li>
+										))}
+									</ul>
+								</div>
+							) : null}
+						</article>
 					))}
-				</ul>
-			</section>
+				</section>
+			</div>
 
-			<section class="section" aria-label="Experience">
-				<h2>Experience</h2>
-				{experience.map((role) => (
-					<article class="role">
-						<header class="roleHeader">
-							<h3 class="roleTitle">{role.title}</h3>
-							<p class="roleMeta">
-								<span class="roleCompany">{role.company}</span>
-								{role.client ? <span> • <span class="roleClient">{role.client}</span></span> : null}
-								{role.location ? <span> • {role.location}</span> : null}
-								<span> • {role.start}–{role.end}</span>
-							</p>
-						</header>
-
-						<ul class="bullets">
-							{role.highlights.map((item) => (
-								<li>{item}</li>
-							))}
-						</ul>
-
-						{role.achievements?.length ? (
-							<div class="examples">
-								<h4>Successes &amp; achievements</h4>
-								<ul class="examplesList">
-									{role.achievements.map((item) => (
-										<li>{item}</li>
-									))}
-								</ul>
+			<div class="centerColumn">
+				<section class="section resume" aria-label="Resume">
+					<h2>Resume</h2>
+					<div class="resumePaper" aria-label="Resume preview">
+						{resumeImageUrl ? (
+							<img class="resumeImage" src={resumeImageUrl} alt={`Resume preview for ${name}`} loading="lazy" />
+						) : (
+							<div class="resumePlaceholder" aria-label="Resume placeholder">
+								<p class="placeholderTitle">Resume placeholder</p>
+								<p class="hint">We’ll add a PDF/image later.</p>
 							</div>
-						) : null}
+						)}
+					</div>
 
-						{role.examples?.length ? (
-							<div class="examples">
-								<h4>Example work</h4>
-								<ul class="examplesList">
-									{role.examples.map((ex) => (
-										<li>
-											<span class="exampleTitle">{ex.title}:</span> {ex.detail}
-										</li>
-									))}
-								</ul>
-							</div>
-						) : null}
-					</article>
-				))}
-			</section>
+					<p class="actions">
+						{resumeUrl ? (
+							<a class="button" href={resumeUrl} target="_blank" rel="noreferrer noopener">Open resume</a>
+						) : (
+							<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
+						)}
+					</p>
+				</section>
+			</div>
 
 			<aside class="sidebar" aria-label="Details">
 				<section class="section" aria-label="Technology Experience">
@@ -257,24 +312,29 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 					</dl>
 				</section>
 
-				<section class="section resume" aria-label="Resume">
-					<h2>Resume</h2>
-					{resumeImageUrl ? (
-						<img class="resumeImage" src={resumeImageUrl} alt={`Resume preview for ${name}`} loading="lazy" />
-					) : (
-						<div class="resumePlaceholder" aria-label="Resume placeholder">
-							<p class="placeholderTitle">Resume placeholder</p>
-							<p class="hint">We’ll add a PDF/image later.</p>
-						</div>
-					)}
-
-					<p class="actions">
-						{resumeUrl ? (
-							<a class="button" href={resumeUrl} target="_blank" rel="noreferrer">Open resume</a>
-						) : (
-							<span class="button buttonDisabled" aria-disabled="true">Resume (coming soon)</span>
-						)}
-					</p>
+				<section class="section" aria-label="Recent Activity">
+					<h2>Recent Activity</h2>
+					<div class="activityList">
+						{recentActivity.map((item) => (
+							<article class="activityItem">
+								<p class="activityMeta">
+									<span class="activityDate">{item.date}</span>
+									{item.link ? (
+										<a class="activityLink" href={item.link.href} target="_blank" rel="noreferrer noopener">{item.link.label}</a>
+									) : null}
+								</p>
+								<h3 class="activityTitle">{item.title}</h3>
+								<p class="hint">{item.detail}</p>
+								{item.tags?.length ? (
+									<ul class="pills">
+										{item.tags.map((t) => (
+											<li class="pill">{t}</li>
+										))}
+									</ul>
+								) : null}
+							</article>
+						))}
+					</div>
 				</section>
 
 				<section class="section" aria-label="Skills">
@@ -297,7 +357,7 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 						<article class="project">
 							<h3 class="projectTitle">
 								{p.link ? (
-									<a class="projectLink" href={p.link} target="_blank" rel="noreferrer">{p.name}</a>
+									<a class="projectLink" href={p.link} target="_blank" rel="noreferrer noopener">{p.name}</a>
 								) : (
 									p.name
 								)}
@@ -342,7 +402,7 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 	}
 
 	.card {
-		width: min(1100px, 100%);
+		width: min(1400px, 100%);
 		background: white;
 		border: 1px solid rgba(0, 0, 0, 0.08);
 		border-radius: 14px;
@@ -379,11 +439,21 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		text-transform: uppercase;
 	}
 
-	.grid {
+	.layoutGrid {
 		display: grid;
-		grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+		grid-template-columns: minmax(0, 1.15fr) minmax(0, 420px) minmax(0, 1.15fr);
 		gap: 20px;
 		align-items: start;
+	}
+
+	.primaryColumn {
+		display: grid;
+		gap: 16px;
+	}
+
+	.centerColumn {
+		display: grid;
+		gap: 16px;
 	}
 
 	.section {
@@ -391,7 +461,12 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		padding-top: 16px;
 	}
 
-	.grid > .section:first-child {
+	.primaryColumn > .section:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+
+	.centerColumn > .section:first-child {
 		border-top: none;
 		padding-top: 0;
 	}
@@ -500,6 +575,49 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 		background: rgba(17, 24, 39, 0.02);
 	}
 
+	.activityList {
+		display: grid;
+		gap: 12px;
+	}
+
+	.activityItem {
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		border-radius: 12px;
+		padding: 12px;
+		background: rgba(17, 24, 39, 0.02);
+	}
+
+	.activityMeta {
+		margin: 0 0 6px;
+		display: flex;
+		gap: 10px;
+		align-items: baseline;
+		justify-content: space-between;
+		color: #4b5563;
+		font-size: 12px;
+	}
+
+	.activityDate {
+		font-weight: 600;
+		color: #374151;
+	}
+
+	.activityLink {
+		color: inherit;
+		text-decoration: none;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+	}
+
+	.activityLink:hover {
+		border-bottom-color: rgba(0, 0, 0, 0.55);
+	}
+
+	.activityTitle {
+		margin: 0 0 6px;
+		font-size: 14px;
+		color: #111827;
+	}
+
 	.techLabel {
 		margin: 0;
 		color: #111827;
@@ -553,6 +671,11 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 	}
 
 	.resumePlaceholder {
+		width: 100%;
+		height: 100%;
+		display: grid;
+		place-content: center;
+		text-align: center;
 		border: 1px dashed rgba(0, 0, 0, 0.22);
 		border-radius: 12px;
 		padding: 16px;
@@ -567,12 +690,24 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 
 	.resumeImage {
 		display: block;
-		width: 100%;
-		max-height: 900px;
+		max-width: 100%;
+		max-height: 100%;
 		object-fit: contain;
-		border: 1px solid rgba(0, 0, 0, 0.08);
-		border-radius: 12px;
+	}
+
+	.resumePaper {
 		margin-top: 10px;
+		width: 100%;
+		aspect-ratio: 8.5 / 11;
+		max-height: 900px;
+		padding: 14px;
+		border-radius: 14px;
+		background: #ffffff;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+		display: grid;
+		place-items: center;
+		overflow: hidden;
 	}
 
 	.skillGroup + .skillGroup {
@@ -634,7 +769,7 @@ const projects: Array<{ name: string; summary: string; tech: string[]; link?: st
 	}
 
 	@media (max-width: 1024px) {
-		.grid {
+		.layoutGrid {
 			grid-template-columns: 1fr;
 		}
 

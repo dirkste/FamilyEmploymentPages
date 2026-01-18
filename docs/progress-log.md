@@ -8,3 +8,9 @@ Small, factual record of notable changes to this site/repo.
 - Added portfolio section ideas backlog: `docs/portfolio-sections-ideas.md`.
 - Adopted a feature-branch + PR workflow (with review feedback handled via `gh`).
 - Updated docs (README + backlog) to reflect current site state.
+
+## 2026-01-18
+
+- Restored `/` to render the full resume view (after temporarily pointing it at a minimal debugging page).
+- Added explicit routes for A/B comparison: `/minimal` (minimal) and `/resume` (full).
+- Improved the center resume preview “paper” presentation in `src/components/Welcome.astro`.
