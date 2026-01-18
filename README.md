@@ -4,9 +4,12 @@ Static Astro site for a resume-style employment background + evolving portfolio.
 
 ## Current implemented state
 
-- Single-page resume/portfolio layout rendered at `/`.
-- Page entry: `src/pages/index.astro` (wraps the layout + the main content component).
-- Main content: `src/components/Welcome.astro` (resume-style sections + placeholders).
+- Full resume/portfolio layout rendered at `/` (default).
+- Alternate routes:
+	- `/minimal` for a minimal “Dirk-only” view (useful for layout debugging).
+	- `/resume` for an explicit full-resume route (currently same as `/`).
+- Page entries live in `src/pages/*.astro` and wrap `src/layouts/Layout.astro`.
+- Main resume content: `src/components/Welcome.astro` (resume-style sections + placeholders + sidebars).
 - No integrations, API/server routes, or content collections configured.
 
 ### Placeholder content conventions
@@ -22,6 +25,8 @@ Run from the repo root:
 - Dev server: `npm run dev` (default `http://localhost:4321`)
 - Production build: `npm run build` (outputs `dist/`)
 - Preview build: `npm run preview`
+
+Tip: `npm run dev` hot-reloads automatically when you save files. `npm run build` just generates `dist/` (it does not serve), and `npm run preview` serves the built output.
 
 ## Repo notes
 

@@ -5,6 +5,8 @@ Goal: complement the resume-style page with evidence of current momentum, real-w
 ## Section: Recent activity
 High signal for employers: shows you’re active and improving, not just listing history.
 
+Status: implemented as a sidebar section in `src/components/Welcome.astro` (iterate content over time).
+
 Ideas (pick 3–6 items initially):
 - **Now**: what you’re working on this month (1–2 bullets)
 - **Recently shipped**: small changelog for this site (date + one line)
@@ -33,6 +35,11 @@ Ideas:
 
 ## Section: Past challenges
 High signal for employers: shows problem solving, leadership, and how you operate under constraints.
+
+AI Background:
+- **How he leverages AI**
+
+Links to Articles I have published
 
 Challenge card template:
 - **Situation**: what was broken / unclear / risky

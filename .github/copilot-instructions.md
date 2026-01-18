@@ -1,37 +1,35 @@
 # Copilot instructions (employmentBackground)
 
 ## Project snapshot
-- Astro 5 static site starter (no integrations configured yet). Config: [astro.config.mjs](../astro.config.mjs)
-- Source lives in [src/](../src/): pages in [src/pages/](../src/pages/), layouts in [src/layouts/](../src/layouts/), components in [src/components/](../src/components/)
-- Uses strict TypeScript settings via `astro/tsconfigs/strict`: [tsconfig.json](../tsconfig.json)
+- Astro 5 static site (no integrations/server routes/content collections). Config: [astro.config.mjs](../astro.config.mjs)
+- Routes are file-based:
+  - `/` → [src/pages/index.astro](../src/pages/index.astro) renders [src/components/Welcome.astro](../src/components/Welcome.astro)
+  - `/resume` → [src/pages/resume.astro](../src/pages/resume.astro) (currently same content as `/`)
+  - `/minimal` → [src/pages/minimal.astro](../src/pages/minimal.astro) renders [src/components/Minimal.astro](../src/components/Minimal.astro) for layout/debug
+- Layout wrapper is [src/layouts/Layout.astro](../src/layouts/Layout.astro) (provides `<slot />` + `<title>`).
+- TypeScript is strict via `astro/tsconfigs/strict`: [tsconfig.json](../tsconfig.json)
 
-## Dev workflows (use npm scripts)
+## Dev workflows
 - Install: `npm install`
-- Dev server (default `http://localhost:4321`): `npm run dev`
-- Production build (outputs `dist/`): `npm run build`
-- Preview built site: `npm run preview`
-- Astro CLI passthrough: `npm run astro -- <args>`
+- Run locally: `npm run dev` (defaults to `http://localhost:4321`)
+- Build: `npm run build` (outputs `dist/`)
+- Preview build: `npm run preview`
+- VS Code debug config: “Development server” in [.vscode/launch.json](../.vscode/launch.json)
 
-## Git workflow (repo practice)
-- Prefer feature branches + PRs for non-trivial changes; keep `main` merge-ready.
-- Run `npm run build` before opening/merging a PR (no CI configured yet).
+## Repo conventions (Astro)
+- Keep the structure: page → layout wrapper → components (see [src/pages/index.astro](../src/pages/index.astro)).
+- Component data is co-located with rendering in frontmatter (typed arrays + `.map()` loops), especially in [src/components/Welcome.astro](../src/components/Welcome.astro).
+- Define props as a `type Props` and destructure from `Astro.props as Props` (see [src/components/Minimal.astro](../src/components/Minimal.astro)).
+- Prefer component-scoped styling via `<style>` in the `.astro` file (Layout/Welcome/Minimal all do this).
 
-## Code patterns used here
-- `.astro` files use the frontmatter block for imports/logic, then template markup.
-  - Example page imports layout + component: [src/pages/index.astro](../src/pages/index.astro)
-  - Layout provides `<slot />` for page content: [src/layouts/Layout.astro](../src/layouts/Layout.astro)
-- Assets are imported as modules and referenced via `.src`.
-  - Example: `import background from '../assets/background.svg'` then `src={background.src}`: [src/components/Welcome.astro](../src/components/Welcome.astro)
-
-## Conventions to follow when editing
-- Keep the current structure: page → layout wrapper → components.
-- Prefer local component CSS via `<style>` blocks inside `.astro` files (as in the starter).
-- Preserve ESM (`"type": "module"`) conventions; use `import`/`export` (see [package.json](../package.json)).
-
-## What’s intentionally NOT here (yet)
-- No tests, linters, or formatters configured.
-- No content collections, server routes, or framework integrations present.
+## Assets + resume placeholders
+- Static files live in `public/` and are referenced by absolute paths (e.g. `/resume.pdf`).
+- `Welcome.astro` supports:
+  - `resumeUrl="/resume.pdf"`
+  - `resumeImageUrl="/resume.png"`
+  (see the Props docstrings in [src/components/Welcome.astro](../src/components/Welcome.astro)).
 
 ## Safe change strategy
-- When refactoring, update imports in [src/pages/index.astro](../src/pages/index.astro) and any referenced components/layouts.
-- If you replace the starter “Welcome” content, do it by editing [src/components/Welcome.astro](../src/components/Welcome.astro) and/or swapping the component used in [src/pages/index.astro](../src/pages/index.astro).
+- If changing routes/content, update the page entrypoints under [src/pages/](../src/pages/) and keep them wrapped in [src/layouts/Layout.astro](../src/layouts/Layout.astro).
+- Use `/minimal` ([src/pages/minimal.astro](../src/pages/minimal.astro)) as a quick smoke-test for layout/CSS changes.
+- No CI configured; run `npm run build` before merging/pushing.

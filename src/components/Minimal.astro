@@ -1,0 +1,29 @@
+---
+type Props = {
+	name?: string;
+};
+
+const { name = 'Dirk' } = Astro.props as Props;
+---
+
+<main class="page" aria-label="Profile">
+	<h1 class="name">{name}</h1>
+</main>
+
+<style>
+	.page {
+		min-height: 100vh;
+		display: grid;
+		place-items: center;
+		padding: 32px 16px;
+		font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+		background: #f7f7fb;
+	}
+
+	.name {
+		margin: 0;
+		font-size: 48px;
+		letter-spacing: -0.02em;
+		color: #111827;
+	}
+</style>
