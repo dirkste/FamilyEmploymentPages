@@ -217,7 +217,7 @@ const recentActivity: RecentActivityItem[] = [
 		</header>
 
 		<div class="layoutGrid">
-			<div class="gutterLeft" aria-label="Overview">
+			<div class="primaryColumn">
 				<section class="section" aria-label="Summary">
 					<h2>Summary</h2>
 					<ul class="bullets">
@@ -275,7 +275,7 @@ const recentActivity: RecentActivityItem[] = [
 				</section>
 			</div>
 
-			<div class="centerColumn" aria-label="Resume">
+			<div class="centerColumn">
 				<section class="section resume" aria-label="Resume">
 					<h2>Resume</h2>
 					<div class="resumePaper" aria-label="Resume preview">
@@ -446,7 +446,7 @@ const recentActivity: RecentActivityItem[] = [
 		align-items: start;
 	}
 
-	.gutterLeft {
+	.primaryColumn {
 		display: grid;
 		gap: 16px;
 	}
@@ -461,7 +461,7 @@ const recentActivity: RecentActivityItem[] = [
 		padding-top: 16px;
 	}
 
-	.gutterLeft > .section:first-child {
+	.primaryColumn > .section:first-child {
 		border-top: none;
 		padding-top: 0;
 	}
